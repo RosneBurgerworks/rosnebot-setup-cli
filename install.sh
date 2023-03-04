@@ -97,8 +97,6 @@ if [ ! -d nullnexus-proxy ]; then
   popd
 fi
 
-sudo mkdir user_instances
-
 sudo sed -i 's/^restricted-network yes/# restricted-network yes/g' /etc/firejail/firejail.config
 
 echo "Installation finished."
