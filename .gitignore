@@ -1,0 +1,10 @@
+cathook-ipc-server/
+nullnexus-proxy/
+catbot-database/
+cathook/
+just-disable-vac/
+build/
+build-debug/
+accounts.txt
+# IDE specific files
+.idea/
