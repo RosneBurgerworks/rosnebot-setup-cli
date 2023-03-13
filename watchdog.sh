@@ -5,9 +5,6 @@
 login=$1
 steam_command=$2
 
-# Give Steam time to start
-sleep 5
-
 while :; do
   # Check if Steam is started and start TF2
   if [ "$(pidof "$steam_command" | wc -w)" -eq 2 ]; then
