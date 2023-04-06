@@ -18,7 +18,8 @@ f = open('accounts.txt', 'r')
 data = f.read()
 f.close()
 
-accounts = data.split(' ')
+data = data.replace('\r\n', '\n')
+accounts = data.split('\n')
 accounts.remove('')
 profile = open('bot-profile.jpg', 'rb')
 nickname = '[NAME HERE]'  # Enter the nickname you wish your bots to have here
@@ -50,7 +51,7 @@ if enable_gatherid32:
     id_file = open('steamid32.txt', 'a')  # Open the file as append
 
 for index, account in enumerate(accounts):
-    username, password = account.split(':')
+    username, password = account.split(' ')
     print(f'Logging in as user #{index + 1}/{len(accounts)} ({username})...')
 
     while True:
@@ -142,7 +143,7 @@ for index, account in enumerate(accounts):
 
     # Only pause if we're changing avatars or setting up the community profile, and we're not at the last account,
     # we have less than or equal to 10 accounts in total, or force_sleep is set to True
-    if (enable_avatarchange or enable_set_up and (index + 1 != len(accounts) or len(accounts) <= 10)) or force_sleep:
+    if enable_avatarchange or enable_set_up and (index + 1 != len(accounts) or len(accounts) <= 10) or force_sleep:
         # For file avatars no more than 10 avatars per 5 minutes from each IP address
         time.sleep(31)
 
