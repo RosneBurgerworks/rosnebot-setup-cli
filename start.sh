@@ -39,11 +39,23 @@ else
   steam_command="steam"
 fi
 
-# Symlink watchdog to a folder all bots have access to
+# Copy scripts to a folder where all bots have access
 sudo cp -u watchdog.sh /opt/
+sudo cp -u setup-steamapps.sh /opt/
+
+# Mount it somewhere all bots have access to
+sudo mkdir -p /opt/steamapps
+mountpoint -q /opt/steamapps || sudo mount --bind ~/.steam/steam/steamapps/ /opt/steamapps
+
+# Stop Steam updates to not create problems while starting. Make sure to still update Steam from time to time while your bots are not running
+echo "BootStrapperInhibitAll=Enable" >/home/"$USER"/.steam/steam/Steam.cfg
 
 filename="accounts.txt"
 accounts_length=$(wc -l $filename | awk '{print $1}')
+if [ "$accounts_length" -gt 254 ]; then
+  echo "You have more than 254 accounts. The IPC will not be able to handle all and some will not be able to connect!"
+fi
+
 sudo ./setup-netspaces.sh "$accounts_length"
 index=0
 # Start up all bots

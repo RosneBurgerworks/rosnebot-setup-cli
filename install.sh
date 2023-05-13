@@ -68,8 +68,8 @@ if [ ! -f /home/novisual.so ]; then
     exit
   fi
   popd
-  sudo mkdir -p "/opt/cathook/data/configs"
-  sudo cp "build/bin/libcathook.so" "/opt/novisual.so"
+  sudo mkdir -p /opt/cathook/data/configs
+  sudo cp build/bin/libcathook.so /opt/novisual.so
   sudo chmod -R 0755 /opt/cathook/data/configs/
 fi
 

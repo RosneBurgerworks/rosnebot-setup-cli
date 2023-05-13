@@ -23,7 +23,7 @@ if [ ! -f bin/libcathook.so ]; then
   exit
 fi
 popd || exit
-sudo cp "build/bin/libcathook.so" "/opt/novisual.so"
+sudo cp build/bin/libcathook.so /opt/novisual.so
 
 pushd cathook-ipc-server || exit
 git remote set-url origin https://github.com/nullworks/cathook-ipc-server.git

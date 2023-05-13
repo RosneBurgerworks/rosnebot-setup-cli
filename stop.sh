@@ -23,8 +23,13 @@ ipc_server=$(pgrep /opt/cathook/ipc/bin/server)
 ipc_console=$(pgrep /opt/cathook/ipc/bin/console)
 [ -n "$ipc_console" ] && sudo kill "${ipc_console}"
 
+accounts_length=$(wc -l accounts.txt | awk '{print $1}')
 # Stop all bots' firejail instances
-killall -q -s SIGKILL firejail
+for ((i = 0; i < accounts_length; ++i)); do
+  firejail --quiet --shutdown=b"$i"
+  echo "Stopped bot $i"
+done
+
 
 # Stop the telegram relay
 if [ -d cathook-tg-relay-bot ]; then
@@ -34,5 +39,4 @@ if [ -d cathook-tg-relay-bot ]; then
 fi
 
 # Delete bots' network namespaces
-accounts_length=$(wc -l accounts.txt | awk '{print $1}')
 sudo ./shutdown-netspaces.sh "$accounts_length"
