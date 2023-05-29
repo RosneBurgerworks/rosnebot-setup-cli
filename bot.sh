@@ -7,7 +7,7 @@ bot_id=$2
 steam_command=$3
 
 # Start firejail instance with Steam
-firejail --dns=1.1.1.1 --net="$(route -n | grep '^0\.0\.0\.0' | grep -o '[^ ]*$' | head -1)" --veth-name=veth"$bot_id" --profile="$(pwd)"/bot.profile --nodvd --noinput --notv --nou2f --novideo --quiet --x11=xvfb --private="$(pwd)"/steam-home --hostname=localhost --name=b"$bot_id" --env=PULSE_SERVER=unix:/tmp/pulse.sock --env=LD_PRELOAD="$(pwd)"/just-disable-vac/build/bin64/libvpcfs.so.0:"$(pwd)"/just-disable-vac/build/bin32/libvpcfs.so.0 "$steam_command" -silent -vrdisable -nocrashmonitor -skipstreamingdrivers -login "$login" >/dev/null 2>&1 &
+firejail --dns=1.1.1.1 --net="$(route -n | grep '^0\.0\.0\.0' | grep -o '[^ ]*$' | head -1)" --veth-name=veth"$bot_id" --noprofile --nodvd --noinput --notv --nou2f --novideo --quiet --x11=xvfb --private="$(pwd)"/steam-home --hostname=localhost --name=b"$bot_id" --env=PULSE_SERVER=unix:/tmp/pulse.sock --env=LD_PRELOAD="$(pwd)"/just-disable-vac/build/bin64/libvpcfs.so.0:"$(pwd)"/just-disable-vac/build/bin32/libvpcfs.so.0 "$steam_command" -silent -vrdisable -nocrashmonitor -skipstreamingdrivers -login "$login" >/dev/null 2>&1 &
 
 # Sleeping for less will not give firejail enough time to start the sandbox
 sleep 2
