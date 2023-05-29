@@ -74,10 +74,12 @@ if [ ! -f /home/novisual.so ]; then
 fi
 
 if [ ! -d just-disable-vac ]; then
-  git clone https://gitlab.com/nullworks/cathook/just-disable-vac.git
+  git clone https://github.com/explowz/just-disable-vac.git
   pushd just-disable-vac
   mkdir -p build && pushd build
   cmake .. && make
+  sudo cp -r bin32 /opt/
+  sudo cp -r bin64 /opt/
   popd
   popd
 fi

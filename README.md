@@ -1,4 +1,3 @@
-## !! THIS REPOSITORY MUST BE CLONED ON THE DESKTOP !!
 ## Catbot Setup
 
 Setup scripts for cat-bots (cathook navbots)

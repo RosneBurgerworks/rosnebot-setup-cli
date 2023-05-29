@@ -30,7 +30,6 @@ for ((i = 0; i < accounts_length; ++i)); do
   echo "Stopped bot $i"
 done
 
-
 # Stop the telegram relay
 if [ -d cathook-tg-relay-bot ]; then
   pushd cathook-tg-relay-bot || exit

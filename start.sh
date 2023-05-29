@@ -52,8 +52,8 @@ echo "BootStrapperInhibitAll=Enable" >/home/"$USER"/.steam/steam/Steam.cfg
 
 filename="accounts.txt"
 accounts_length=$(wc -l $filename | awk '{print $1}')
-if [ "$accounts_length" -gt 254 ]; then
-  echo "You have more than 254 accounts. The IPC will not be able to handle all and some will not be able to connect!"
+if [ "$accounts_length" -gt 255 ]; then
+  echo "You have more than 255 accounts. The IPC will not be able to handle all and some will not be able to connect!"
 fi
 
 sudo ./setup-netspaces.sh "$accounts_length"
@@ -62,5 +62,6 @@ index=0
 while read -r login; do
   mkdir -p user_instances/b"$index"
   ./bot.sh "$login" "$index" "$steam_command"
+  echo "Started bot $index"
   ((index++))
 done <$filename
