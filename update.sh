@@ -25,6 +25,15 @@ fi
 popd || exit
 sudo cp build/bin/libcathook.so /opt/novisual.so
 
+pushd just-disable-vac || exit
+git pull -ff
+mkdir -p build && pushd build || exit
+cmake .. && make
+sudo cp -r bin32 /opt/
+sudo cp -r bin64 /opt/
+popd || exit
+popd || exit
+
 pushd cathook-ipc-server || exit
 git remote set-url origin https://github.com/nullworks/cathook-ipc-server.git
 bash update.sh
