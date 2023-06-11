@@ -8,8 +8,8 @@ if [ $EUID -eq 0 ]; then
 fi
 
 # Start the IPC server
-ipc_server=$(pgrep /opt/cathook/ipc/bin/server)
-[ -z "$ipc_server" ] && /opt/cathook/ipc/bin/server -s >/dev/null &
+ipc_server=$(pgrep /opt/cathook/ipc/server)
+[ -z "$ipc_server" ] && /opt/cathook/ipc/server -s >/dev/null &
 [ -z "$ipc_server" ] && echo $! >/tmp/cat-ipc-server.pid
 
 # Start nullnexus proxy

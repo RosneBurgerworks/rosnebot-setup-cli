@@ -18,9 +18,9 @@ if [ -d nullnexus-proxy ]; then
   popd || exit
 fi
 
-ipc_server=$(pgrep /opt/cathook/ipc/bin/server)
+ipc_server=$(pgrep /opt/cathook/ipc/server)
 [ -n "$ipc_server" ] && sudo kill "${ipc_server}"
-ipc_console=$(pgrep /opt/cathook/ipc/bin/console)
+ipc_console=$(pgrep /opt/cathook/ipc/console)
 [ -n "$ipc_console" ] && sudo kill "${ipc_console}"
 
 accounts_length=$(wc -l accounts.txt | awk '{print $1}')
