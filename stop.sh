@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Written by Bintr on 21.11.2022
 # Purpose: Stop all processes started by the start script.
 
@@ -8,6 +8,14 @@ for ((i = 0; i < accounts_length; ++i)); do
   firejail --quiet --shutdown=b"$i"
   echo "Stopped bot $i"
 done
+
+kill "$(pgrep deletelock.sh)"
+
+# Stop the IPC server
+[ -f /tmp/cat-ipc-server.pid ] && sudo kill "$(cat /tmp/cat-ipc-server.pid)"
+
+# Delete the PID file of the IPC server
+[ -f /tmp/cat-ipc-server.pid ] && sudo rm /tmp/cat-ipc-server.pid
 
 # Stop pulseaudio
 [ -f /tmp/pulsemodule.id ] && pactl unload-module "$(cat /tmp/pulsemodule.id)" && rm /tmp/pulsemodule.id

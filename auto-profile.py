@@ -13,6 +13,7 @@ import json
 import time
 
 import steam.client
+from steam.enums import EPersonaState
 
 f = open('accounts.txt', 'r')
 data = f.read()
@@ -56,7 +57,7 @@ for index, account in enumerate(accounts):
 
     while True:
         client = steam.client.SteamClient()
-        eresult = client.login(username, password=password)
+        eresult = client.login(username, password)
         status = 'OK' if eresult == 1 else 'FAIL'
         print(f'Login status: {status} ({eresult})')
         if status == 'OK':
@@ -79,7 +80,7 @@ for index, account in enumerate(accounts):
 
     if enable_namechange:
         time.sleep(5)  # Needed, since Steam refuses to change status if we do it too soon
-        client.change_status(persona_state=1, player_name=nickname)
+        client.change_status(persona_state=EPersonaState.Online, player_name=nickname)
         print(f'Changed Steam nickname to "{nickname}"')
 
     if enable_avatarchange or enable_nameclear or enable_set_up:
@@ -95,7 +96,7 @@ for index, account in enumerate(accounts):
                 'type': 'player_avatar_image',
                 'sId': f'{id64}',
                 'sessionid': session.cookies.get('sessionid', domain='steamcommunity.com'),
-                'doSub': '1',
+                'doSub': '1'
             }
             post_cookies = {
                 'steamLogin': session.cookies.get('steamLogin', domain='steamcommunity.com'),
@@ -143,7 +144,7 @@ for index, account in enumerate(accounts):
 
     # Only pause if we're changing avatars or setting up the community profile, and we're not at the last account,
     # we have less than or equal to 10 accounts in total, or force_sleep is set to True
-    if enable_avatarchange or enable_set_up and (index + 1 != len(accounts) or len(accounts) <= 10) or force_sleep:
+    if (enable_avatarchange or enable_set_up and (index + 1 != len(accounts) or len(accounts) <= 10)) or force_sleep:
         # For file avatars no more than 10 avatars per 5 minutes from each IP address
         time.sleep(31)
 

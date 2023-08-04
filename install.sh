@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Written by Bintr on 14.11.2022
 # Purpose: Clone all necessary repositories.
 

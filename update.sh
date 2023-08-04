@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 OLD_UPDATE=$(git rev-parse HEAD:update)
 git pull --ff

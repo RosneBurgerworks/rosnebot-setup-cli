@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Credits to Mark
 # Purpose: Deletes network namespaces for all bots.
 

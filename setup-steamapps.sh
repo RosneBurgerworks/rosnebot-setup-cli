@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Written by Bintr on 13.05.2023
 # Purpose: Replace steamapps folder with our default one
 

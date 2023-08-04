@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/bash
 # Written by Bintr on 14.11.2022
 # Purpose: Start cathook bots along with other needed scripts.
 
@@ -45,14 +45,14 @@ sudo cp -u setup-steamapps.sh /opt/
 sudo mkdir -p /opt/steamapps
 mountpoint -q /opt/steamapps || sudo mount --bind ~/.steam/steam/steamapps/ /opt/steamapps
 
-# Stop Steam updates to not create problems while starting. Make sure to still update Steam from time to time while your bots are not running
-echo "BootStrapperInhibitAll=Enable" >/home/"$USER"/.steam/steam/Steam.cfg
-
 filename="accounts.txt"
 accounts_length=$(wc -l $filename | awk '{print $1}')
 if [ "$accounts_length" -gt 255 ]; then
-  echo "You have more than 255 accounts. The IPC will not be able to handle all and some will not be able to connect!"
+  echo "You have more than 255 accounts. The IPC will not be able to handle all, and some will not be able to connect!"
 fi
+
+# Start source lock watchdog
+./deletelock.sh >/dev/null 2>&1 &
 
 sudo ./setup-netspaces.sh "$accounts_length"
 index=0
