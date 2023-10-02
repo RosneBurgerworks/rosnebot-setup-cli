@@ -20,24 +20,10 @@ kill "$(pgrep deletelock.sh)"
 # Stop pulseaudio
 [ -f /tmp/pulsemodule.id ] && pactl unload-module "$(cat /tmp/pulsemodule.id)" && rm /tmp/pulsemodule.id
 
-# Stop nullnexus proxy
-if [ -d nullnexus-proxy ]; then
-  pushd nullnexus-proxy || exit
-  pm2 stop index.js
-  popd || exit
-fi
-
 ipc_server=$(pgrep -f /opt/cathook/ipc/server)
 [ -n "$ipc_server" ] && sudo kill "${ipc_server}"
 ipc_console=$(pgrep -f /opt/cathook/ipc/console)
 [ -n "$ipc_console" ] && sudo kill "${ipc_console}"
-
-# Stop the telegram relay
-if [ -d cathook-tg-relay-bot ]; then
-  pushd cathook-tg-relay-bot || exit
-  pm2 stop bot.js
-  popd || exit
-fi
 
 # Delete bots' network namespaces
 sudo ./shutdown-netspaces.sh "$accounts_length"

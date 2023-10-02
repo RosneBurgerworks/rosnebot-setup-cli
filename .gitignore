@@ -1,7 +1,6 @@
-cathook-ipc-server/
-nullnexus-proxy/
-catbot-database/
-cathook/
+rosnehook-ipc-server/
+rosnehook-database/
+temprosnehook/
 just-disable-vac/
 user_instances/
 build/

@@ -23,7 +23,7 @@ data = data.replace('\r\n', '\n')
 accounts = data.split('\n')
 accounts.remove('')
 profile = open('bot-profile.jpg', 'rb')
-nickname = '[NAME HERE]'  # Enter the nickname you wish your bots to have here
+nickname = 'youtube.com/@RosneGaming'  # Enter the nickname you wish your bots to have here
 
 enable_debugging = False
 enable_extra_info = False

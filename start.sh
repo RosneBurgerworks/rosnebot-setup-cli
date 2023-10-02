@@ -1,6 +1,6 @@
 #!/bin/bash
 # Written by Bintr on 14.11.2022
-# Purpose: Start cathook bots along with other needed scripts.
+# Purpose: Start rosnebots along with other needed scripts.
 
 if [ $EUID -eq 0 ]; then
   echo "This script must not be run as root!"
@@ -9,20 +9,6 @@ fi
 
 # Start the IPC server
 [ -z $(pgrep -f /opt/cathook/ipc/server) ] && /opt/cathook/ipc/server -s >/dev/null &
-
-# Start nullnexus proxy
-if [ -d nullnexus-proxy ]; then
-  pushd nullnexus-proxy || exit
-  pm2 start index.js
-  popd || exit
-fi
-
-# Start the Telegram relay
-if [ -d cathook-tg-relay-bot ]; then
-  pushd cathook-tg-relay-bot || exit
-  pm2 start bot.js
-  popd || exit
-fi
 
 if [ -x "$(command -v pulseaudio)" ]; then
   echo "Setting up Pulseaudio socket..."

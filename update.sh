@@ -9,14 +9,14 @@ if [ "$OLD_UPDATE" != "$NEW_UPDATE" ]; then
   exec "$0" "$@"
 fi
 
-pushd cathook || exit
+pushd temprosnehook || exit
 git pull --ff
 git submodule update --init --recursive
 popd || exit
 
 mkdir -p build
 pushd build || exit
-cmake -DCMAKE_BUILD_TYPE=Release -DVisuals_DrawType="Textmode" -DVACBypass=1 -DEnableLogging=0 ../cathook/
+cmake -DCMAKE_BUILD_TYPE=Release -DVisuals_DrawType="Textmode" -DVACBypass=1 -DEnableLogging=0 ../temprosnehook/
 make -j"$(nproc --all)"
 if [ ! -f bin/libcathook.so ]; then
   echo "FATAL: Build failed"
@@ -34,28 +34,23 @@ sudo cp -r bin64 /opt/
 popd || exit
 popd || exit
 
-pushd cathook-ipc-server || exit
-git remote set-url origin https://github.com/nullworks/cathook-ipc-server.git
-bash update.sh
-popd || exit
-
-pushd nullnexus-proxy || exit
-git remote set-url origin https://gitlab.com/nullworks/cathook/nullnexus-proxy.git
+pushd rosnehook-ipc-server || exit
+git remote set-url origin https://github.com/RosneBurgerworks/rosnehook-ipc-server.git
 bash update.sh
 popd || exit
 
 echo "Fetching navmeshes..."
-if [ -d catbot-database ]; then
-  pushd catbot-database || exit
+if [ -d rosnebot-database ]; then
+  pushd rosnebot-database || exit
   git fetch --depth 1
   git reset --hard origin/master
   popd || exit
 else
-  git clone --depth 1 https://github.com/explowz/catbot-database.git
+  git clone --depth 1 https://github.com/RosneBurgerworks/rosnebot-database.git
 fi
 
 echo "Copying navmeshes..."
-rsync catbot-database/nav\ meshes/*.nav ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/
-chmod 755 ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/*.nav # fix permissions so tf2 is happy
+sudo rsync rosnebot-database/nav\ meshes/*.nav ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/
+sudo chmod 755 ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/*.nav # fixup permissions so tf2 is happy
 
 echo "Done"

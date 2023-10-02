@@ -10,14 +10,14 @@ if [ $EUID -eq 0 ]; then
 fi
 
 if [ ! -d /opt/cathook ]; then
-  echo "Please install Cathook on your main TF2 first."
-  echo "https://github.com/explowz/cathook"
+  echo "Please install Rosnehook on your main TF2 first."
+  echo "https://github.com/RosneBurgerworks/temprosnehook"
   exit
 fi
 
 # Idiot-proof this shit
 if [ ! -d .git ] || [ ! -x "$(command -v git)" ]; then
-  echo "You must clone the repository instead of downloading it."
+  echo "You must clone the repository instead of downloadnig it. (git clone)"
   exit
 fi
 
@@ -39,29 +39,29 @@ if [ ! -x "$(command -v killall)" ]; then
   echo "Killall doesn't exist. Please install it. (psmisc)"
 fi
 
-if [ ! -d cathook ]; then
-  git clone --recursive https://github.com/explowz/cathook.git
+if [ ! -d temprosnehook ]; then
+  git clone --recursive https://github.com/RosneBurgerworks/temprosnehook.git
 fi
 
 if [ -d ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps ]; then
-  if [ -d catbot-database ]; then
+  if [ -d rosnebot-database ]; then
     echo "Fetching navmeshes..."
-    pushd catbot-database
+    pushd rosnebot-database
     git fetch --depth 1
     git reset --hard origin/master
     popd
   else
-    git clone --depth 1 https://github.com/explowz/catbot-database.git
+    git clone --depth 1 https://github.com/RosneBurgerworks/rosnebot-database.git
   fi
 
   echo "Copying navmeshes..."
-  rsync catbot-database/nav\ meshes/*.nav ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/
-  chmod 755 ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/*.nav # fix permissions, so tf2 is happy
+  sudo rsync rosnebot-database/nav\ meshes/*.nav ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/
+  sudo chmod 755 ~/.steam/steam/steamapps/common/Team\ Fortress\ 2/tf/maps/*.nav
 fi
 
 if [ ! -f /home/novisual.so ]; then
   mkdir -p build && pushd build
-  cmake -DCMAKE_BUILD_TYPE=Release -DVisuals_DrawType="Textmode" -DVACBypass=1 -DEnableLogging=0 ../cathook/
+  cmake -DCMAKE_BUILD_TYPE=Release -DVisuals_DrawType="Textmode" -DVACBypass=1 -DEnableLogging=0 ../temprosnehook/
   make -j"$(nproc --all)"
   if [ ! -f bin/libcathook.so ]; then
     echo "FATAL: Build failed"
@@ -74,7 +74,7 @@ if [ ! -f /home/novisual.so ]; then
 fi
 
 if [ ! -d just-disable-vac ]; then
-  git clone https://github.com/explowz/just-disable-vac.git
+  git clone https://github.com/RosneBurgerworks/just-disable-vac.git
   pushd just-disable-vac
   mkdir -p build && pushd build
   cmake .. && make
@@ -84,18 +84,10 @@ if [ ! -d just-disable-vac ]; then
   popd
 fi
 
-if [ ! -d cathook-ipc-server ]; then
-  git clone --recursive https://github.com/nullworks/cathook-ipc-server.git
-  pushd cathook-ipc-server
+if [ ! -d rosnehook-ipc-server ]; then
+  git clone --recursive https://github.com/RosneBurgerworks/rosnehook-ipc-server.git
+  pushd rosnehook-ipc-server
   ./install.sh
-  popd
-fi
-
-if [ ! -d nullnexus-proxy ]; then
-  sudo npm install pm2 -g
-  git clone --recursive https://gitlab.com/nullworks/cathook/nullnexus-proxy.git
-  pushd nullnexus-proxy
-  ./update.sh
   popd
 fi
 
