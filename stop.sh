@@ -20,9 +20,9 @@ kill "$(pgrep deletelock.sh)"
 # Stop pulseaudio
 [ -f /tmp/pulsemodule.id ] && pactl unload-module "$(cat /tmp/pulsemodule.id)" && rm /tmp/pulsemodule.id
 
-ipc_server=$(pgrep -f /opt/cathook/ipc/server)
+ipc_server=$(pgrep -f /opt/cathook/ipc/bin/server)
 [ -n "$ipc_server" ] && sudo kill "${ipc_server}"
-ipc_console=$(pgrep -f /opt/cathook/ipc/console)
+ipc_console=$(pgrep -f /opt/cathook/ipc/bin/console)
 [ -n "$ipc_console" ] && sudo kill "${ipc_console}"
 
 # Delete bots' network namespaces

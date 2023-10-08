@@ -8,7 +8,7 @@ if [ $EUID -eq 0 ]; then
 fi
 
 # Start the IPC server
-[ -z $(pgrep -f /opt/cathook/ipc/server) ] && /opt/cathook/ipc/server -s >/dev/null &
+[ -z $(pgrep -f /opt/cathook/ipc/bin/server) ] && /opt/cathook/ipc/bin/server -s >/dev/null &
 
 if [ -x "$(command -v pulseaudio)" ]; then
   echo "Setting up Pulseaudio socket..."
